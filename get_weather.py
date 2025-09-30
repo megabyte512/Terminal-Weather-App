@@ -36,11 +36,26 @@ else:
 # failure check for requests not necessary now that we already know we can connect to NWS
 
 # TODO: print data as cleanly as possible for weather.sh
-response = requests.get(forecast_url, headers=headers)
-print(response.json())
 
-response = requests.get(hourly_url, headers=headers)
-print(response.json())
+# Current weather output
+hourly_response = requests.get(hourly_url, headers=headers)
+current_weather = hourly_response.json()['properties']['periods'][0]
+print(current_weather['temperature'])
+print(current_weather['probabilityOfPrecipitation']['value'])
+print(current_weather['dewpoint']['value'])
+print(current_weather['relativeHumidity']['value'])
+print(current_weather['windSpeed'])
+print(current_weather['windDirection'])
+print(current_weather['shortForecast'])
+print()
 
-response = requests.get(grid_data_url, headers=headers)
-print(response.json())
+# Weekly weather output
+weekly_response = requests.get(forecast_url, headers=headers)
+weekly_weather = weekly_response.json()['properties']['periods']
+for i in range(14):
+    print(weekly_weather[i]['temperature'])
+    print(weekly_weather[i]['probabilityOfPrecipitation']['value'])
+
+# For more detailed outputs if I decide to add them
+#response = requests.get(grid_data_url, headers=headers)
+#print(response.json())
