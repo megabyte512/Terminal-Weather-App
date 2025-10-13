@@ -72,3 +72,5 @@ for i in range(14):
 # For more detailed outputs if I decide to add them (like a radar map)
 #response = requests.get(grid_data_url, headers=headers)
 #print(response.json())
+
+print(f"forecast url:{forecast_url} hourly url:{hourly_url} grid data url:{grid_data_url}") # for viewing json structure

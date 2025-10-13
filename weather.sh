@@ -75,58 +75,60 @@ current_tab_one() { # 136x36 is your current default terminal
     clear
     tput cud 1
     echo -e "                     > ${UnderlineStart}Current Forecast${RES}                      Weekly Forecast                      Other Information"
+    tput cup 33 112
+    echo "[q] to quit."
     # printing table for data
     tput dim
     tput cup 4 65 
     echo "┌────────────────────────────┬────────────────────────────┐"
     tput cup 5 65
     for i in {1..8}; do
-        echo "│"
-        tput cup $((i+5)) 65
+      echo "│"
+      tput cup $((i+5)) 65
     done
     tput cup 5 94
     for i in {1..8}; do
-        echo "│"
-        tput cup $((i+5)) 94
+      echo "│"
+      tput cup $((i+5)) 94
     done
     tput cup 5 123
     for i in {1..8}; do
-        echo "│"
-        tput cup $((i+5)) 123
+      echo "│"
+      tput cup $((i+5)) 123
     done
     tput cup 13 65
     echo "├────────────────────────────┼────────────────────────────┤"
     tput cup 14 65
     for i in {1..8}; do
-        echo "│"
-        tput cup $((i+14)) 65
+      echo "│"
+      tput cup $((i+14)) 65
     done
     tput cup 14 94
     for i in {1..8}; do
-        echo "│"
-        tput cup $((i+14)) 94
+      echo "│"
+      tput cup $((i+14)) 94
     done
     tput cup 14 123
     for i in {1..8}; do
-        echo "│"
-        tput cup $((i+14)) 123
+      echo "│"
+      tput cup $((i+14)) 123
     done
     tput cup 22 65
     echo "├────────────────────────────┼────────────────────────────┤"
     tput cup 23 65
     for i in {1..8}; do
-        echo "│"
-        tput cup $((i+23)) 65
+      echo "│"
+      tput cup $((i+23)) 65
     done
     tput cup 23 94
     for i in {1..8}; do
-        echo "│"
-        tput cup $((i+23)) 94
+      echo "│"
+      tput cup $((i+23)) 94
     done
     tput cup 23 123
     for i in {1..8}; do
-        echo "│"
-        tput cup $((i+23)) 123
+      echo "│"
+      tput cup $((i+23)) 123
     done
     tput cup 31 65
     echo "└────────────────────────────┴────────────────────────────┘"
@@ -136,19 +138,19 @@ current_tab_one() { # 136x36 is your current default terminal
     echo "Temperature:"
     tput cup 9 78
     if [[ ${weather_data_array[0]} -gt 100 ]]; then
-        tput setaf 196
+      tput setaf 196
     elif [[ ${weather_data_array[0]} -gt 80 ]]; then
-        tput setaf 208
+      tput setaf 208
     elif [[ ${weather_data_array[0]} -gt 60 ]]; then
-        tput setaf 226
+      tput setaf 226
     elif [[ ${weather_data_array[0]} -gt 40 ]]; then
-        tput setaf 118 
+      tput setaf 118 
     elif [[ ${weather_data_array[0]} -gt 20 ]]; then
-        tput setaf 51
+      tput setaf 51
     elif [[ ${weather_data_array[0]} -gt 0 ]]; then
-        tput setaf 21 
+      tput setaf 21 
     else
-        tput setaf 93
+      tput setaf 93
     fi
     echo "${current_temperature}"
     tput sgr0
@@ -156,13 +158,13 @@ current_tab_one() { # 136x36 is your current default terminal
     echo "% Chance Precipitation:"
     tput cup 9 108
     if [[ ${weather_data_array[1]} -lt 10 ]]; then
-        tput sgr0
+      tput sgr0
     elif [[ ${weather_data_array[1]} -lt 40 ]]; then
-        tput setaf 87
+      tput setaf 87
     elif [[ ${weather_data_array[1]} -lt 70 ]]; then
-        tput setaf 39
+      tput setaf 39
     else
-        tput setaf 27
+      tput setaf 27
     fi
     echo "${current_rain_probability}"
     tput sgr0
@@ -170,13 +172,13 @@ current_tab_one() { # 136x36 is your current default terminal
     echo "Windspeed:"
     tput cup 18 78
     if [[ ${weather_data_array[4]} -lt 6 ]]; then
-        tput sgr0
-    elif [[ ${weather_data_array[4]} -lt 15 ]]; then
-        tput setaf 226
+      tput sgr0
+    elif [[ ${weather_data_array[4]} -lt 17 ]]; then
+      tput setaf 226
     elif [[ ${weather_data_array[4]} -lt 37 ]]; then
-        tput setaf 208
+      tput setaf 208
     else
-        tput setaf 196
+      tput setaf 196
     fi
     echo "${current_windspeed}"
     tput sgr0
@@ -184,14 +186,149 @@ current_tab_one() { # 136x36 is your current default terminal
     echo "Wind Direction:"
     tput cup 18 108
     echo "${current_wind_direction}"
+    # big case ik
+    case $current_wind_direction in
+      N)
+        tput cup 19 108
+        echo "◯"
+        tput cup 17 108
+        echo "●"
+        ;;
+      NNE)
+        tput cup 17 110
+        echo "●"
+        tput cup 19 108
+        echo "◯"
+        ;;
+      NE) 
+        tput cup 17 110
+        echo "●"
+        tput cup 19 107
+        echo "◯"
+        ;;
+      ENE)
+        tput cup 17 112
+        echo "●"
+        tput cup 19 106
+        echo "◯"
+        ;;
+      E) 
+        tput cup 18 110
+        echo "●"
+        tput cup 18 106
+        echo "◯"
+        ;;
+      ESE)
+        tput cup 17 106
+        echo "◯"
+        tput cup 19 112
+        echo "●"
+        ;;
+      SE) 
+        tput cup 17 107
+        echo "◯"
+        tput cup 19 110
+        echo "●"
+        ;;
+      SSE)
+        tput cup 17 108
+        echo "◯"
+        tput cup 19 110
+        echo "●"
+        ;;
+      S) 
+        tput cup 19 108
+        echo "●"
+        tput cup 17 108
+        echo "◯"
+        ;;
+      SSW) 
+        tput cup 17 110
+        echo "◯"
+        tput cup 19 108
+        echo "●"
+        ;;
+      SW) 
+        tput cup 17 110
+        echo "◯"
+        tput cup 19 107
+        echo "●"
+        ;;
+      WSW) 
+        tput cup 17 112
+        echo "◯"
+        tput cup 19 106
+        echo "●"
+        ;; 
+      W) 
+        tput cup 18 110
+        echo "◯"
+        tput cup 18 106
+        echo "●"
+        ;; 
+      WNW) 
+        tput cup 17 106
+        echo "●"
+        tput cup 19 112
+        echo "◯"
+        ;;
+      NW) 
+        tput cup 17 107
+        echo "●"
+        tput cup 19 110
+        echo "◯"
+        ;;
+      NNW) 
+        tput cup 17 108
+        echo "●"
+        tput cup 19 110
+        echo "◯"
+        ;;
+    esac
     tput cup 25 71
     echo "Relative Humidity:"
     tput cup 27 79
+    if [[ ${weather_data_array[3]} -lt 26 ]]; then
+      tput sgr0
+    elif [[ ${weather_data_array[3]} -lt 51 ]]; then
+      tput setaf 87
+    elif [[ ${weather_data_array[3]} -lt 76 ]]; then
+      tput setaf 39
+    else
+      tput setaf 27
+    fi
     echo "${current_realtive_humidity}"
+    tput setaf sgr0
     tput cup 25 105
     echo "Dewpoint:"
-    tput cup 27 108
+    tput cup 27 107
+    no_decimal=${weather_data_array[2]//./}
+    if [[ $no_decimal -lt 5000 ]]; then
+      tput sgr0
+    elif [[ $no_decimal -lt 6000 ]]; then
+      tput setaf 226
+    elif [[ $no_decimal -lt 7000 ]]; then
+      tput setaf 208
+    else
+      tput setaf 196
+    fi
     echo "${current_dewpoint}"
+
+    # ASCII art
+    case $current_forecast in
+      Sunny)
+        ;;
+      Clear)
+        ;;
+      Cloudy)
+        ;;
+      Rain)
+        ;;
+      Snow)
+        ;;
+      Thunderstorms)
+        ;;
+    esac
 }
 
 
@@ -200,6 +337,8 @@ weekly_tab_two() {
     clear
     tput cud 1
     echo "                       Current Forecast                    > ${UnderlineStart}Weekly Forecast${RES}                      Other Information"
+    tput cup 33 112
+    echo "[q] to quit."
 }
 
 
@@ -208,6 +347,8 @@ under_construction_tab_three() {
     clear 
     tput cud 1
     echo "                       Current Forecast                      Weekly Forecast                    > ${UnderlineStart}Other Information${RES}"
+    tput cup 33 112
+    echo "[q] to quit."
 }
 
 
