@@ -1,45 +1,12 @@
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                  .                                   
-                                   G                                  
-                                  GGG                                 
-                                 GggG                                 
-                               GGGGgG                                 
-                 G         dGGgGGGGG                                  
-                  GGGG..GGGGGggGGGG                                   
-                    "GGGGgGGggGG"                                     
-                       '"""""'                                            
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
-                                                                     
+                                           
+                                           
+                                     .     
+                                      G    
+                                     GGG   
+                                    GggG   
+                                  GGGGgG   
+                    G         dGGgGGGGG    
+                     GGGG..GGGGGggGGGG     
+                       "GGGGgGGggGG"       
+                          '"""""'          
+                                           

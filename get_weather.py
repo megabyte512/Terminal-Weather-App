@@ -74,3 +74,5 @@ for i in range(14):
 #print(response.json())
 
 print(f"forecast url:{forecast_url} hourly url:{hourly_url} grid data url:{grid_data_url}") # for viewing json structure
+print(location)
+print(ip)

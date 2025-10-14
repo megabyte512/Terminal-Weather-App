@@ -66,9 +66,13 @@ night5=("${weather_data_array[@]:40:3}")
 day6=("${weather_data_array[@]:43:3}")
 night6=("${weather_data_array[@]:46:3}")
 
+location="${weather_data_array[50]}"
+ip="${weather_data_array[51]}"
+
 UnderlineStart=$(tput smul)
 UnderlineEnd=$(tput rmul)
 RES=$(tput sgr0)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # functions defined here so I don't have to pass variables to them everytime, they can just use the global variables above them
 current_tab_one() { # 136x36 is your current default terminal
@@ -77,6 +81,12 @@ current_tab_one() { # 136x36 is your current default terminal
     echo -e "                     > ${UnderlineStart}Current Forecast${RES}                      Weekly Forecast                      Other Information"
     tput cup 33 112
     echo "[q] to quit."
+    tput cup 32 20
+    echo "Location : $location"
+    tput cup 33 18
+    echo "IP Address : $ip"
+
+
     # printing table for data
     tput dim
     tput cup 4 65 
@@ -317,16 +327,28 @@ current_tab_one() { # 136x36 is your current default terminal
     # ASCII art
     case $current_forecast in
       Sunny)
+        tput cup 5 0
+        cat "$SCRIPT_DIR/Terminal-Weather-App/ascii_art/sunny.txt"
         ;;
       Clear)
+        tput cup 7 0
+        cat "$SCRIPT_DIR/Terminal-Weather-App/ascii_art/clear.txt"
         ;;
       Cloudy)
+        tput cup 5 0
+        cat "$SCRIPT_DIR/Terminal-Weather-App/ascii_art/cloudy.txt"
         ;;
       Rain)
+        tput cup 3 0
+        cat "$SCRIPT_DIR/Terminal-Weather-App/ascii_art/rain.txt"
         ;;
       Snow)
+        tput cup 5 0
+        cat "$SCRIPT_DIR/Terminal-Weather-App/ascii_art/snow.txt"
         ;;
       Thunderstorms)
+        tput cup 3 0
+        cat "$SCRIPT_DIR/Terminal-Weather-App/ascii_art/thunderstorms.txt"
         ;;
     esac
 }
