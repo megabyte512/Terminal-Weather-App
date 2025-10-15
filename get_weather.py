@@ -9,7 +9,7 @@ loc_url = "https://ipinfo.io/json"
 nws_url = "https://api.weather.gov/points/"
 
 # cleaning the "Short Forecast" from NWS
-unwanted_forecast_jargon = ['Scattered', 'And', 'then', 'Slight', 'Chance', 'Partly', 'Mostly', ' ', 'mph', 'Likely', 'Showers']
+unwanted_forecast_jargon = ['Scattered', 'And', 'then', 'Slight', 'Chance', 'Partly', 'Mostly', ' ', 'mph', 'Likely', 'Showers', 'Isolated']
 def strip(s):
     for removable in unwanted_forecast_jargon:
         if s.find(removable) != -1:
