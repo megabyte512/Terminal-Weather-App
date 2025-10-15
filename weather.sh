@@ -6,7 +6,7 @@ load_symbol() {
   local spin='|/-\'
   local i=0
 
-  while ps -p $1 >/dev/null 2>&1; do
+  while ps -p "$1" >/dev/null 2>&1; do
     i=$(((i + 1) % 4))
     printf "\rConnecting to NWS [${spin:$i:1}] "
     sleep 0.1
@@ -66,7 +66,6 @@ location="${weather_data_array[50]}"
 ip="${weather_data_array[51]}"
 
 UnderlineStart=$(tput smul)
-UnderlineEnd=$(tput rmul)
 RES=$(tput sgr0)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -373,7 +372,7 @@ trap 'tput cnorm; tput rmcup; exit 0' INT TERM EXIT
 current_tab_one
 
 while true; do
-  read -n 1 -s key
+  read -r -n 1 -s key
 
   case $key in
   1) current_tab_one ;;
