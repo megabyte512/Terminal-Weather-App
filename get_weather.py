@@ -55,7 +55,7 @@ else:
 
 # Current weather output
 hourly_response = requests.get(hourly_url, headers=headers)
-current_weather = hourly_response.json()['properties']['periods'][0]
+current_weather = hourly_response.json()['properties']['periods'][1]
 print(current_weather['temperature'])
 print(current_weather['probabilityOfPrecipitation']['value'])
 print(round(current_weather['dewpoint']['value'], 2))

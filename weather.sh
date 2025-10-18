@@ -73,7 +73,7 @@ vertical_box_line() {
   local height=$3
   tput cup "$start_row" "$start_col"
   for (( i=0; i<=height; i++ )); do
-    printf "│"
+    echo "│"
     tput cup "$((i + start_row))" "$start_col"
   done
 }
@@ -354,21 +354,25 @@ weekly_tab_two() {
   echo "> ${UnderlineStart}${weekly_weather[3]}${RES}"
   for i in {0..5}; do
     tput cup 4 "$((18*i + 25))"
-    echo "${weekly_weather[8*i + 11]}"
+    echo "${weekly_weather[8*i + 15]}"
   done
-  # You may have noticed that we have 4 for loops here. While having 2 is necessary for either
-  # row of table/data, for some reason the data wouldn't print correctly when table and data
+  # You may have noticed that we have 3 for loops here. It should, in theory, be possible with
+  # one, but for some reason the data wouldn't print correctly when table and data
   # were put in the same loop. Not the biggest deal. Just looks stupid.
-  # top row
   tput dim
   for i in {0..6}; do
     # setting up top row table thing
     vertical_box_line 7 "$((18*i + 4))" 3
     echo "╰─────"
   done
+  for i in {0..6}; do
+    # setting up bottom row table thing
+    vertical_box_line 13 "$((18*i + 8))" 3
+    echo "╰─────"
+  done
   tput sgr0
   for i in {0..6}; do
-    # filling in with data
+    # filling top row with data
     # temp
     tput cup 8 "$((18*i + 6))"
     echo "${weekly_weather[8*i]}°F"
@@ -378,17 +382,7 @@ weekly_tab_two() {
     # forecast icon/emoji
     tput cup 7 "$((i*18 + 6))"
     weather_emoji "${weekly_weather[8*i + 2]}" 
-  done
-  # bottom row
-  tput dim
-  for i in {0..6}; do
-    # setting up bottom row table thing
-    vertical_box_line 13 "$((18*i + 8))" 3
-    echo "╰─────"
-  done
-  tput sgr0
-  for i in {0..6}; do
-    # filling table with data
+    # filling bottom row with data
     # temp
     tput cup 14 "$((18*i + 10))"
     echo "${weekly_weather[8*i + 4]}°F"
