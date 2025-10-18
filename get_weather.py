@@ -26,9 +26,10 @@ def strip(s):
         s = s.replace('Rain', '')
     return s
 
-
+# calling ipinfo.io for coordinates. A lot of these
+# variables are unused ik. Honestly just practicing
+# parsing json files
 response = requests.get(loc_url)
-
 if response.status_code == 200:
     data = response.json()
     ip = data['ip']
@@ -41,7 +42,6 @@ else:
     print('locfail')
 
 response = requests.get(f"{nws_url}{location}", headers=headers)
-
 if response.status_code == 200:
     # extracting useful URLs
     properties = response.json()['properties']
@@ -52,8 +52,6 @@ else:
     print('nwsfail')
 # failure check for requests not necessary
 # now that we already know we can connect to NWS
-
-# TODO: print data as cleanly as possible for weather.sh
 
 # Current weather output
 hourly_response = requests.get(hourly_url, headers=headers)
@@ -73,8 +71,17 @@ for i in range(14):
     print(weekly_weather[i]['temperature'])
     print(weekly_weather[i]['probabilityOfPrecipitation']['value'])
     print(strip(weekly_weather[i]['shortForecast']))
+    date = weekly_weather[i]['startTime']
+    date_cleaned = date.split('T')  # We just care about the date
+    date = date_cleaned[0]          # resetting date variable
+    date_cleaned = date.split('-')  # Splitting again based off API format
+    del date_cleaned[0]             # deleting year (we don't care about that)
+    separator = '/'
+    date = separator.join(date_cleaned)  # putting it all together
+    print(date)
 
-# For more detailed outputs if I decide to add them (like a radar map)
+
+# For more detailed outputs if I decide to add them (like a radar map idk)
 # response = requests.get(grid_data_url, headers=headers)
 # print(response.json())
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# TODO: tabs for (tbd, maybe simple current forecast with cloud coverage, temp, sunrise/sunset, wind, humidity; weekly forecast; and a detailed forecast with aqi, uv index dew point, pressure, visibility, moon phase, maybe even a radar idk, etc.; whatever else I think of), ascii art, live clock, and whatever else I can think of
+# TODO ideas: sunrise/sunset, a detailed forecast with aqi, uv index dew point, pressure, visibility, moon phase, maybe even a radar, live clock or "report generated on/at"
 
 load_symbol() {
   local spin='|/-\'
@@ -47,29 +47,52 @@ current_windspeed="${weather_data_array[4]}mph"
 current_wind_direction="${weather_data_array[5]}"
 current_forecast="${weather_data_array[6]}"
 
-day0=("${weather_data_array[@]:7:3}")
-night0=("${weather_data_array[@]:10:3}")
-day1=("${weather_data_array[@]:13:3}")
-night1=("${weather_data_array[@]:16:3}")
-day2=("${weather_data_array[@]:19:3}")
-night2=("${weather_data_array[@]:22:3}")
-day3=("${weather_data_array[@]:25:3}")
-night3=("${weather_data_array[@]:28:3}")
-day4=("${weather_data_array[@]:31:3}")
-night4=("${weather_data_array[@]:34:3}")
-day5=("${weather_data_array[@]:37:3}")
-night5=("${weather_data_array[@]:40:3}")
-day6=("${weather_data_array[@]:43:3}")
-night6=("${weather_data_array[@]:46:3}")
+# weekly weather data formatted like:
+# temp.
+# chance precip.
+# forecast
+# date
+# this goes on for the next 14 cycles (day/night have unique values)
+# 14*4 = 56 vars, starting at index 7 (8th element in the array)
+# we will store this block in a separate array, so we won't have to
+# worry about shifting by 7 everytime.
+weekly_weather=("${weather_data_array[@]:7:56}")
 
-location="${weather_data_array[50]}"
-ip="${weather_data_array[51]}"
+location="${weather_data_array[64]}"
+ip="${weather_data_array[65]}"
 
+# some macros
 UnderlineStart=$(tput smul)
 RES=$(tput sgr0)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# functions defined here so I don't have to pass variables to them everytime, they can just use the global variables above them
+# this function draws a vertical bar with input params as labeled below
+vertical_box_line() {
+  local start_row=$1
+  local start_col=$2
+  local height=$3
+  tput cup "$start_row" "$start_col"
+  for (( i=0; i<=height; i++ )); do
+    printf "│"
+    tput cup "$((i + start_row))" "$start_col"
+  done
+}
+
+# this function decides which emoji to print based on the input forecast
+weather_emoji() {
+  local weather=$1
+  case $weather in
+    "Sunny") echo "☀️" ;;
+    "Clear") echo "🌙" ;;
+    "Rain") echo "💧" ;;
+    "Snow") echo "❄️" ;;
+    "Cloudy") echo "☁️" ;;
+    "Thunderstorms") echo "⚡" ;;
+    *) echo "❓[$weather]" ;;  # Shows what didn't match
+   esac
+}
+
+# tab functions defined here so I don't have to pass variables to them everytime, they can just use the global variables above them
 current_tab_one() { # 136x36 is your current default terminal
   clear
   tput cud 1
@@ -85,59 +108,23 @@ current_tab_one() { # 136x36 is your current default terminal
   tput dim
   tput cup 4 65
   echo "┌────────────────────────────┬────────────────────────────┐"
-  tput cup 5 65
-  for i in {1..8}; do
-    echo "│"
-    tput cup $((i + 5)) 65
-  done
-  tput cup 5 94
-  for i in {1..8}; do
-    echo "│"
-    tput cup $((i + 5)) 94
-  done
-  tput cup 5 123
-  for i in {1..8}; do
-    echo "│"
-    tput cup $((i + 5)) 123
-  done
+  vertical_box_line 5 65 8
+  vertical_box_line 5 94 8
+  vertical_box_line 5 123 8
   tput cup 13 65
   echo "├────────────────────────────┼────────────────────────────┤"
-  tput cup 14 65
-  for i in {1..8}; do
-    echo "│"
-    tput cup $((i + 14)) 65
-  done
-  tput cup 14 94
-  for i in {1..8}; do
-    echo "│"
-    tput cup $((i + 14)) 94
-  done
-  tput cup 14 123
-  for i in {1..8}; do
-    echo "│"
-    tput cup $((i + 14)) 123
-  done
+  vertical_box_line 14 65 8
+  vertical_box_line 14 94 8
+  vertical_box_line 14 123 8
   tput cup 22 65
   echo "├────────────────────────────┼────────────────────────────┤"
-  tput cup 23 65
-  for i in {1..8}; do
-    echo "│"
-    tput cup $((i + 23)) 65
-  done
-  tput cup 23 94
-  for i in {1..8}; do
-    echo "│"
-    tput cup $((i + 23)) 94
-  done
-  tput cup 23 123
-  for i in {1..8}; do
-    echo "│"
-    tput cup $((i + 23)) 123
-  done
+  vertical_box_line 23 65 8
+  vertical_box_line 23 94 8
+  vertical_box_line 23 123 8
   tput cup 31 65
   echo "└────────────────────────────┴────────────────────────────┘"
   tput sgr0
-  # Filling table with data
+  # Filling table with data and changing color based on value
   tput cup 7 74
   echo "Temperature:"
   tput cup 9 78
@@ -191,6 +178,11 @@ current_tab_one() { # 136x36 is your current default terminal
   tput cup 18 108
   echo "${current_wind_direction}"
   # big case ik
+  # printing a little graphic for wind direction.
+  # solid circle is where the wind is coming from.
+  # empty circle is where the wind is travelling to.
+  # You'll notice that "N" for example means wind is coming from the
+  # north, not travelling to the north. idk why this is the standard.
   case $current_wind_direction in
   N)
     tput cup 19 108
@@ -353,31 +345,92 @@ weekly_tab_two() {
   echo "                       Current Forecast                    > ${UnderlineStart}Weekly Forecast${RES}                      Other Information"
   tput cup 33 112
   echo "[q] to quit."
+  tput cup 32 20
+  echo "Location : $location"
+  tput cup 33 18
+  echo "IP Address : $ip"
+  # print dates
+  tput cup 4 7
+  echo "> ${UnderlineStart}${weekly_weather[3]}${RES}"
+  for i in {0..5}; do
+    tput cup 4 "$((18*i + 25))"
+    echo "${weekly_weather[8*i + 11]}"
+  done
+  # You may have noticed that we have 4 for loops here. While having 2 is necessary for either
+  # row of table/data, for some reason the data wouldn't print correctly when table and data
+  # were put in the same loop. Not the biggest deal. Just looks stupid.
+  # top row
+  tput dim
+  for i in {0..6}; do
+    # setting up top row table thing
+    vertical_box_line 7 "$((18*i + 4))" 3
+    echo "╰─────"
+  done
+  tput sgr0
+  for i in {0..6}; do
+    # filling in with data
+    # temp
+    tput cup 8 "$((18*i + 6))"
+    echo "${weekly_weather[8*i]}°F"
+    # chance precip.
+    tput cup 9 "$((18*i + 6))"
+    echo "${weekly_weather[8*i + 1]}%"
+    # forecast icon/emoji
+    tput cup 7 "$((i*18 + 6))"
+    weather_emoji "${weekly_weather[8*i + 2]}" 
+  done
+  # bottom row
+  tput dim
+  for i in {0..6}; do
+    # setting up bottom row table thing
+    vertical_box_line 13 "$((18*i + 8))" 3
+    echo "╰─────"
+  done
+  tput sgr0
+  for i in {0..6}; do
+    # filling table with data
+    # temp
+    tput cup 14 "$((18*i + 10))"
+    echo "${weekly_weather[8*i + 4]}°F"
+    # chance precip.
+    tput cup 15 "$((18*i + 10))"
+    echo "${weekly_weather[8*i + 5]}%"
+    # forecast icon/emoji
+    tput cup 13 "$((18*i + 10))"
+    weather_emoji "${weekly_weather[8*i + 6]}"
+  done
 }
 
-under_construction_tab_three() {
+# Haven't gotten around to this yet. Ideas for what will go here on line 3^
+other_information_tab_three() {
   clear
   tput cud 1
   echo "                       Current Forecast                      Weekly Forecast                    > ${UnderlineStart}Other Information${RES}"
   tput cup 33 112
   echo "[q] to quit."
+  tput cup 18 60
+  echo "UNDER CONSTRUCTION"
 }
 
+# setting up terminal to clear and hide cursor
 tput smcup
 tput civis
 clear
 
+# upon exit, run these
 trap 'tput cnorm; tput rmcup; exit 0' INT TERM EXIT
 
+# default to tab 1
 current_tab_one
 
+# listen for "1, 2, 3, and q" keys and decide what to do thereafter
 while true; do
   read -r -n 1 -s key
 
   case $key in
   1) current_tab_one ;;
   2) weekly_tab_two ;;
-  3) under_construction_tab_three ;;
+  3) other_information_tab_three ;;
   q) exit 0 ;;
   esac
 done
