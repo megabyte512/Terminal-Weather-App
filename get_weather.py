@@ -24,11 +24,14 @@ def strip(s):
         s = s.replace('Cloudy', '')
     if s.find('Snow') > -1:
         s = s.replace('Rain', '')
+        s = s.replace('Sunny', '')
     return s
 
 # calling ipinfo.io for coordinates. A lot of these
 # variables are unused ik. Honestly just practicing
 # parsing json files
+
+
 response = requests.get(loc_url)
 if response.status_code == 200:
     data = response.json()
