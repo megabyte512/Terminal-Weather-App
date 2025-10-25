@@ -11,7 +11,8 @@ nws_url = "https://api.weather.gov/points/"
 # cleaning the "Short Forecast" from NWS
 unwanted_forecast_jargon = [
     'Scattered', 'And', 'then', 'Slight', 'Chance', 'Partly',
-    'Mostly', ' ', 'mph', 'Likely', 'Showers', 'Isolated'
+    'Mostly', ' ', 'mph', 'Likely', 'Showers', 'Isolated',
+    'Light'
 ]
 
 
