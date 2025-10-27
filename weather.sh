@@ -88,6 +88,7 @@ weather_emoji() {
     "Snow") echo "❄️" ;;
     "Cloudy") echo "☁️" ;;
     "Thunderstorms") echo "⚡" ;;
+    "Fog") echo "🌫️" ;;
     *) echo "❓[$weather]" ;;  # Shows what didn't match
    esac
 }

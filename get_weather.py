@@ -12,7 +12,7 @@ nws_url = "https://api.weather.gov/points/"
 unwanted_forecast_jargon = [
     'Scattered', 'And', 'then', 'Slight', 'Chance', 'Partly',
     'Mostly', ' ', 'mph', 'Likely', 'Showers', 'Isolated',
-    'Light'
+    'Light', 'Patchy'
 ]
 
 
@@ -25,6 +25,8 @@ def strip(s):
         s = s.replace('Cloudy', '')
     if s.find('Snow') > -1:
         s = s.replace('Rain', '')
+        s = s.replace('Sunny', '')
+    if s.find('Fog') > -1:
         s = s.replace('Sunny', '')
     return s
 
