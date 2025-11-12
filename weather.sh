@@ -394,6 +394,27 @@ weekly_tab_two() {
     tput cup 13 "$((18*i + 10))"
     weather_emoji "${weekly_weather[8*i + 6]}"
   done
+
+  tput cup 28 44
+  echo "%💧"
+  tput cup 29 47
+  echo "╰────────────────────────────────────────────╯"
+  tput setaf 39
+  for i in {0..6}; do
+    numrow=$(( ( ${weekly_weather[8*i + 1]} + 10 ) / 10 ))
+    for ((j=0; j<numrow; j++)); do
+      tput cup 29 "$((49 + 6*i))"
+      tput cuu "$j"
+      echo "███"
+    done
+    numrow=$(( ( ${weekly_weather[8*i + 5]} + 10 ) / 10 ))
+    for ((j=0; j<numrow; j++)); do
+      tput cup 29 "$((52 + 6*i))"
+      tput cuu "$j"
+      echo "███"
+    done
+  done
+  tput sgr0
 }
 
 # Haven't gotten around to this yet. Ideas for what will go here on line 3^
