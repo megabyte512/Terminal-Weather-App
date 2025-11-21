@@ -26,6 +26,7 @@ def strip(s):
     if s.find('Snow') > -1:
         s = s.replace('Rain', '')
         s = s.replace('Sunny', '')
+        s = s.replace('Cloudy', '')
     if s.find('Fog') > -1:
         s = s.replace('Sunny', '')
     return s
