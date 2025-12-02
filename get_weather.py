@@ -29,6 +29,7 @@ def strip(s):
         s = s.replace('Cloudy', '')
     if s.find('Fog') > -1:
         s = s.replace('Sunny', '')
+        s = s.replace('Cloudy', '')
     return s
 
 # calling ipinfo.io for coordinates. A lot of these
