@@ -12,7 +12,7 @@ nws_url = "https://api.weather.gov/points/"
 unwanted_forecast_jargon = [
     'Scattered', 'And', 'then', 'Slight', 'Chance', 'Partly',
     'Mostly', ' ', 'mph', 'Likely', 'Showers', 'Isolated',
-    'Light', 'Patchy', 'Heavy'
+    'Light', 'Patchy', 'Heavy', 'Areas', 'Of'
 ]
 
 
@@ -30,6 +30,7 @@ def strip(s):
     if s.find('Fog') > -1:
         s = s.replace('Sunny', '')
         s = s.replace('Cloudy', '')
+        s = s.replace('Snow', '')
     return s
 
 # calling ipinfo.io for coordinates. A lot of these
