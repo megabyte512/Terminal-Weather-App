@@ -337,6 +337,9 @@ current_tab_one() { # 136x36 is your current default terminal
     tput cup 3 0
     cat "$SCRIPT_DIR/Terminal-Weather-App/ascii_art/thunderstorms.txt"
     ;;
+  *)
+    tput cup 10 10
+    echo -e "No ascii art for: ${current_forecast}"
   esac
 }
 
