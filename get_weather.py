@@ -31,6 +31,7 @@ def strip(s):
         s = s.replace('Sunny', '')
         s = s.replace('Cloudy', '')
         s = s.replace('Snow', '')
+        s = s.replace('Freezing', '')
     return s
 
 # calling ipinfo.io for coordinates. A lot of these
