@@ -33,6 +33,9 @@ def strip(s):
         s = s.replace('Cloudy', '')
         s = s.replace('Snow', '')
         s = s.replace('Freezing', '')
+    if s.find('Thunderstorms') > -1:
+        s = s.replace('Cloudy', '')
+        s = s.replace('Sunny', '')
     return s
 
 # calling ipinfo.io for coordinates. A lot of these
