@@ -42,7 +42,7 @@ fi
 current_temperature="${weather_data_array[0]}°F"
 current_rain_probability="${weather_data_array[1]}%"
 current_dewpoint="${weather_data_array[2]}°F"
-current_realtive_humidity="${weather_data_array[3]}%"
+current_relative_humidity="${weather_data_array[3]}%"
 current_windspeed="${weather_data_array[4]}mph"
 current_wind_direction="${weather_data_array[5]}"
 current_forecast="${weather_data_array[6]}"
@@ -294,7 +294,7 @@ current_tab_one() { # 136x36 is your current default terminal
   else
     tput setaf 27
   fi
-  echo "${current_realtive_humidity}"
+  echo "${current_relative_humidity}"
   tput setaf sgr0
   tput cup 25 105
   echo "Dewpoint:"
