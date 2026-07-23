@@ -405,13 +405,13 @@ weekly_tab_two() {
   tput setaf 39
   for i in {0..6}; do
     numrow=$(( ( ${weekly_weather[8*i + 1]} + 10 ) / 10 ))
-    for ((j=0; j<numrow; j++)); do
+    for ((j=0; j<numrow-1; j++)); do
       tput cup 29 "$((49 + 6*i))"
       tput cuu "$j"
       echo "███"
     done
     numrow=$(( ( ${weekly_weather[8*i + 5]} + 10 ) / 10 ))
-    for ((j=0; j<numrow; j++)); do
+    for ((j=0; j<numrow-1; j++)); do
       tput cup 29 "$((52 + 6*i))"
       tput cuu "$j"
       echo "███"
